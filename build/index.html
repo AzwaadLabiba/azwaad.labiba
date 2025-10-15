@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>DADL Lab - Data Analysis and Deep Learning Laboratory</title>
+
+      <!-- Bootstrap CSS -->
+      <link
+         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+         rel="stylesheet"
+      />
+      <link
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+         rel="stylesheet"
+      />
+      <link
+         rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.3/css/academicons.min.css"
+      />
+
+      <style>
+         :root {
+            --dadl-primary: #420303;
+            --dadl-primary-dark: #330202;
+            --dadl-primary-light: #661010;
+            --dadl-text: #2c3e50;
+         }
+
+         body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            padding-top: 60px;
+         }
+
+         .section {
+            padding: 60px 0 20px 0 !important;
+         }
+
+         .navbar {
+            background-color: var(--dadl-primary) !important;
+            padding: 0.5rem 0;
+         }
+
+         .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white !important;
+         }
+
+         .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+            padding: 0.5rem 1rem !important;
+         }
+
+         .navbar-nav .nav-link:hover {
+            color: white !important;
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+         }
+
+         .hero-section {
+            background: linear-gradient(
+               135deg,
+               var(--dadl-primary) 0%,
+               var(--dadl-primary-light) 100%
+            );
+            color: white;
+            padding: 3rem 0 2rem 0;
+            text-align: center;
+         }
+
+         .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+         }
+
+         .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+         }
+
+         .section {
+            padding: 4rem 0;
+         }
+
+         .section:nth-child(even) {
+            background-color: #f8f9fa;
+         }
+
+         .section-title {
+            color: var(--dadl-text);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+         }
+
+         .text-primary-custom {
+            color: var(--dadl-text) !important;
+         }
+
+         .card {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--dadl-primary);
+         }
+
+         .btn-primary {
+            background-color: var(--dadl-primary);
+            border-color: var(--dadl-primary);
+         }
+
+         .btn-primary:hover {
+            background-color: var(--dadl-primary-dark);
+            border-color: var(--dadl-primary-dark);
+         }
+
+         .footer {
+            background-color: var(--dadl-primary);
+            color: white;
+            padding: 2rem 0;
+         }
+
+         .admin-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+         }
+
+         .admin-btn {
+            background-color: var(--dadl-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+         }
+
+         html {
+            scroll-behavior: smooth;
+         }
+
+         .contact-info {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--dadl-primary);
+         }
+
+         .contact-info h6 {
+            color: var(--dadl-text);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+         }
+
+         .text-primary-custom {
+            color: #420303;
+         }
+
+         .card {
+            background-color: #f8f4f4; /* Light warm tint */
+            border-radius: 8px;
+            padding: 16px;
+            min-height: 220px;
+
+            /* Shadow */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+
+            /* Smooth hover effect (optional) */
+            transition:
+               box-shadow 0.2s ease-in-out,
+               transform 0.2s ease-in-out;
+         }
+
+         .card:hover {
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+         }
+
+         .icon-link i {
+            font-size: 1.2rem;
+            color: inherit;
+            transition: 0.2s;
+         }
+
+         .icon-link:hover i {
+            color: #b52b2b; /* Subtle red accent on hover */
+            transform: scale(1.1);
+         }
+
+         .see-more-btn {
+            background-color: transparent;
+            color: #420303;
+            border: 1px solid #420303;
+            transition: all 0.3s ease;
+         }
+
+         .see-more-btn:hover {
+            background-color: #420303;
+            color: white;
+            text-decoration: none;
+         }
+
+         /* Load Academicons if not already enabled */
+         @import url("https://cdn.jsdelivr.net/npm/academicons@1.9.3/css/academicons.min.css");
+      </style>
+   </head>
+   <body>
+      <!-- Navigation -->
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+         <div class="container">
+            <a class="navbar-brand" href="#home">
+               <i class="fas fa-brain me-2"></i>DADL Lab
+            </a>
+
+            <button
+               class="navbar-toggler"
+               type="button"
+               data-bs-toggle="collapse"
+               data-bs-target="#navbarNav"
+            >
+               <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+               <ul class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                     <a class="nav-link" href="#about">Home</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#students">Students</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#projects">Projects</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#publications">Publications</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+
+      <!-- Hero Section -->
+      <section id="home" class="hero-section">
+         <div class="container">
+            <h1 class="hero-title">DADL Lab</h1>
+            <p class="hero-subtitle">
+               Data Analysis and Deep Learning Laboratory
+            </p>
+         </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about" class="section">
+         <div class="container">
+            <h2 class="section-title">About Our Lab</h2>
+            <div class="row">
+               <div class="col-lg-6">
+                  <h3 class="text-primary-custom mb-3">Mission</h3>
+                  <p>
+                     Our lab is focused on developing innovative deep learning algorithms and data analysis techniques to solve real-world problems across diverse domains.
+                  </p>
+               </div>
+               <div class="col-lg-6">
+                  <h3 class="text-primary-custom mb-3">Research Areas</h3>
+                   
+                  <span
+                     class="badge me-2 mb-2"
+                     style="background-color: #022e02"
+                     >Natural Language Processing</span
+                  >
+                  
+                  <span
+                     class="badge me-2 mb-2"
+                     style="background-color: #022e02"
+                     >Deep Learning</span
+                  >
+                  
+                  <span
+                     class="badge me-2 mb-2"
+                     style="background-color: #022e02"
+                     >Computer Vision</span
+                  >
+                   
+               </div>
+            </div>
+
+            
+         </div>
+      </section>
+
+      <!-- Professor Section -->
+   <section id="professor" class="section">
+   <div class="container">
+      <div class="card p-4">
+         <div class="row">
+            <!-- Left column: Photo and basic info -->
+            <div class="col-lg-2 col-md-3 text-center mb-3 mb-md-0">
+               
+               <img
+                  src="static/uploads/professor/Islam-Aminul-edited_1.jpg"
+                  class="rounded-circle mx-auto"
+                  style="width: 140px; height: 140px; object-fit: cover; border: 3px solid #420303;"
+                  alt="Aminul Islam"
+               />
+               
+               
+               <h5 class="text-primary-custom mt-3 mb-2">
+                  Aminul Islam
+               </h5>
+               
+               <div class="text-muted">
+                  
+                     
+                        <div>Associate Professor of Computer Science</div>
+                     
+                        <div>Hardy Edmiston Endowed Professor in Computer Science</div>
+                     
+                  
+               </div>
+
+               <!-- Social Links -->
+               <div class="d-flex justify-content-center gap-2 mt-3">
+                  
+                  
+                  <a href="https://scholar.google.com/citations?user=GZWObWoAAAAJ&amp;hl=en" target="_blank" class="icon-link" style="color: #000">
+                     <i class="ai ai-google-scholar"></i>
+                  </a>
+                  
+                  
+                  
+                  <a href="mailto:aminul@louisiana.edu" class="icon-link" style="color: #d44638">
+                     <i class="fas fa-envelope"></i>
+                  </a>
+                  
+               </div>
+            </div>
+
+            <!-- Right column: Details -->
+            <div class="col-lg-10 col-md-9">
+               
+               <div class="mb-3">
+                  <h5 class="mb-2">About Me</h5>
+                  <p>I am passionate about conducting research on foundational problems in Artificial Intelligence (AI), Natural Language Processing (NLP), and Data Analytics. My current work explores how deep learning can be enhanced through data-driven insights. Recently, my research has expanded to investigate how language-based representations can be applied to other domains, such as images, DNA sequences, and protein structures. </p>
+               </div>
+               
+
+               <div>
+                  <h5 class="mb-2">Education</h5>
+                  <ul class="list-unstyled">
+                     
+                     <li class="mb-1">Ph.D. in Computer Science | University of Ottawa | Supervisor: Prof. Diana Inkpen</li>
+                     
+                     <li class="mb-1">M.Sc. in Computer Science | University of Ottawa | Supervisors: Prof. Diana Inkpen and Prof. Iluju Kiringa</li>
+                     
+                     <li class="mb-1">Postdoctoral Fellowship | Dalhousie University | Supervisor: Prof. Evangelos E. Milios</li>
+                     
+                     <li class="mb-1"></li>
+                     
+                  </ul>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-md-4">
+                     <h6 class="mb-1"><i class="fas fa-envelope me-1"></i> Email</h6>
+                     <p class="text-muted mb-0">
+                        aminul@louisiana.edu
+                     </p>
+                  </div>
+                  <div class="col-md-4">
+                     <h6 class="mb-1"><i class="fas fa-building me-1"></i> Office</h6>
+                     <p class="text-muted mb-0">
+                        James R. Oliver, Room 303
+                     </p>
+                  </div>
+                  
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+
+      <!-- Students Section -->
+      <section id="students" class="section">
+         <div class="container">
+            <h2 class="section-title text-center mb-5">Lab Members</h2>
+
+            <!-- Current Members (PhD + Masters Combined) -->
+            <div class="mb-5">
+               <h3 class="text-primary-custom mb-4">Current Members</h3>
+               <div class="row">
+                  
+                  <div class="col-lg-6 mb-4">
+                     <div
+                        class="card p-3 shadow-sm"
+                        style="border-left: 5px solid #420303"
+                     >
+                        <div class="d-flex align-items-start">
+                           <!-- Profile Photo -->
+                           <img
+                              src="static/uploads/students/my_photo_Md_Mustakin_Alam.jpg"
+                              alt="Mustakin Alam"
+                              class="rounded-circle me-3"
+                              style="
+                                 width: 100px;
+                                 height: 100px;
+                                 object-fit: cover;
+                                 border: 3px solid #420303;
+                              "
+                           />
+
+                           <div class="flex-grow-1">
+                              <h5 class="mb-1 text-primary-custom">
+                                 Mustakin Alam
+                              </h5>
+
+                              <!-- Role Tag -->
+                              
+                              <span
+                                 class="badge"
+                                 style="background-color: #2e1802"
+                                 >PhD Student</span
+                              >
+                              
+
+                              <p class="mt-2 mb-1">
+                                 <strong>Research:</strong> Batch Pruning by activation stability, Protein Language Model
+                              </p>
+                              <p class="text-muted mb-1">
+                                 <i class="fas fa-university me-1"></i>School of Computing and Informatics, ULL
+                              </p>
+                              <p class="text-muted mb-2">
+                                 <i class="fas fa-calendar me-1"></i>
+                                  Fall 2024 – Present
+                                 
+                              </p>
+
+                              <!-- Social Icons -->
+                              <div class="d-flex gap-3">
+                                 
+                                 <a
+                                    href="https://www.linkedin.com/in/mdmustakinalam"
+                                    target="_blank"
+                                    class="icon-link"
+                                    style="color: #0a66c2"
+                                 >
+                                    <i class="fab fa-linkedin"></i>
+                                 </a>
+                                  
+                                 <a
+                                    href="https://scholar.google.com/citations?user=GMECoi0AAAAJ&amp;hl=en"
+                                    target="_blank"
+                                    class="icon-link"
+                                    style="color: #000"
+                                 >
+                                    <i class="ai ai-google-scholar"></i>
+                                 </a>
+                                  
+                                 <a
+                                    href="https://mustakinalam.github.io/"
+                                    target="_blank"
+                                    class="icon-link"
+                                    style="color: #420303"
+                                 >
+                                    <i class="fas fa-globe"></i>
+                                 </a>
+                                  
+                                 <a
+                                    href="mailto:md-mustakin.alam1@louisiana.edu"
+                                    class="icon-link"
+                                    style="color: #d44638"
+                                 >
+                                    <i class="fas fa-envelope"></i>
+                                 </a>
+                                 
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div class="col-lg-6 mb-4">
+                     <div
+                        class="card p-3 shadow-sm"
+                        style="border-left: 5px solid #420303"
+                     >
+                        <div class="d-flex align-items-start">
+                           <!-- Profile Photo -->
+                           <img
+                              src="static/uploads/students/IMG_6550_Mithun_Ranjan_Kar.jpg"
+                              alt="Mithun Ranjan Kar"
+                              class="rounded-circle me-3"
+                              style="
+                                 width: 100px;
+                                 height: 100px;
+                                 object-fit: cover;
+                                 border: 3px solid #420303;
+                              "
+                           />
+
+                           <div class="flex-grow-1">
+                              <h5 class="mb-1 text-primary-custom">
+                                 Mithun Ranjan Kar
+                              </h5>
+
+                              <!-- Role Tag -->
+                              
+                              <span
+                                 class="badge"
+                                 style="background-color: #2e1802"
+                                 >PhD Student</span
+                              >
+                              
+
+                              <p class="mt-2 mb-1">
+                                 <strong>Research:</strong> Protein unfolding using language model
+                              </p>
+                              <p class="text-muted mb-1">
+                                 <i class="fas fa-university me-1"></i> School of Computing and Informatics, ULL
+                              </p>
+                              <p class="text-muted mb-2">
+                                 <i class="fas fa-calendar me-1"></i>
+                                  Fall 2024 – Present
+                                 
+                              </p>
+
+                              <!-- Social Icons -->
+                              <div class="d-flex gap-3">
+                                 
+                                 <a
+                                    href="https://www.linkedin.com/in/mithun-kar"
+                                    target="_blank"
+                                    class="icon-link"
+                                    style="color: #0a66c2"
+                                 >
+                                    <i class="fab fa-linkedin"></i>
+                                 </a>
+                                    
+                                 <a
+                                    href="mailto:mithun-ranjan.kar1@louisiana.edu"
+                                    class="icon-link"
+                                    style="color: #d44638"
+                                 >
+                                    <i class="fas fa-envelope"></i>
+                                 </a>
+                                 
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div class="col-lg-6 mb-4">
+                     <div
+                        class="card p-3 shadow-sm"
+                        style="border-left: 5px solid #420303"
+                     >
+                        <div class="d-flex align-items-start">
+                           <!-- Profile Photo -->
+                           <img
+                              src="static/uploads/students/20251001_125616_Gabriel_Trahan.jpg"
+                              alt="Gabriel Trahan"
+                              class="rounded-circle me-3"
+                              style="
+                                 width: 100px;
+                                 height: 100px;
+                                 object-fit: cover;
+                                 border: 3px solid #420303;
+                              "
+                           />
+
+                           <div class="flex-grow-1">
+                              <h5 class="mb-1 text-primary-custom">
+                                 Gabriel Trahan
+                              </h5>
+
+                              <!-- Role Tag -->
+                              
+                              <span
+                                 class="badge"
+                                 style="background-color: #2e1802"
+                                 >PhD Student</span
+                              >
+                              
+
+                              <p class="mt-2 mb-1">
+                                 <strong>Research:</strong> Inverse Constrained Reinforcement Learning using Neuro-Symbolic
+predicates
+                              </p>
+                              <p class="text-muted mb-1">
+                                 <i class="fas fa-university me-1"></i> School of Computing and Informatics, ULL
+                              </p>
+                              <p class="text-muted mb-2">
+                                 <i class="fas fa-calendar me-1"></i>
+                                  Fall 2023 – Present
+                                 
+                              </p>
+
+                              <!-- Social Icons -->
+                              <div class="d-flex gap-3">
+                                  
+                                 <a
+                                    href="https://scholar.google.com/citations?user=YCjOjlIAAAAJ&amp;hl=en&amp;authuser=1"
+                                    target="_blank"
+                                    class="icon-link"
+                                    style="color: #000"
+                                 >
+                                    <i class="ai ai-google-scholar"></i>
+                                 </a>
+                                  
+                                 <a
+                                    href="https://theokoles7.github.io/portfolio/"
+                                    target="_blank"
+                                    class="icon-link"
+                                    style="color: #420303"
+                                 >
+                                    <i class="fas fa-globe"></i>
+                                 </a>
+                                  
+                                 <a
+                                    href="mailto:gabriel.trahan1@louisiana.edu"
+                                    class="icon-link"
+                                    style="color: #d44638"
+                                 >
+                                    <i class="fas fa-envelope"></i>
+                                 </a>
+                                 
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div class="col-lg-6 mb-4">
+                     <div
+                        class="card p-3 shadow-sm"
+                        style="border-left: 5px solid #420303"
+                     >
+                        <div class="d-flex align-items-start">
+                           <!-- Profile Photo -->
+                           <img
+                              src="static/uploads/students/Image_of_Faias_Satter_Faias_Satter.jpg"
+                              alt="Faias Satter"
+                              class="rounded-circle me-3"
+                              style="
+                                 width: 100px;
+                                 height: 100px;
+                                 object-fit: cover;
+                                 border: 3px solid #420303;
+                              "
+                           />
+
+                           <div class="flex-grow-1">
+                              <h5 class="mb-1 text-primary-custom">
+                                 Faias Satter
+                              </h5>
+
+                              <!-- Role Tag -->
+                              
+                              <span
+                                 class="badge"
+                                 style="background-color: #2e1802"
+                                 >PhD Student</span
+                              >
+                              
+
+                              <p class="mt-2 mb-1">
+                                 <strong>Research:</strong> DNA sequencing using language model
+                              </p>
+                              <p class="text-muted mb-1">
+                                 <i class="fas fa-university me-1"></i> School of Computing and Informatics, ULL
+                              </p>
+                              <p class="text-muted mb-2">
+                                 <i class="fas fa-calendar me-1"></i>
+                                  Fall 2025 – Present
+                                 
+                              </p>
+
+                              <!-- Social Icons -->
+                              <div class="d-flex gap-3">
+                                 
+                                 <a
+                                    href="www.linkedin.com/in/faias-satter"
+                                    target="_blank"
+                                    class="icon-link"
+                                    style="color: #0a66c2"
+                                 >
+                                    <i class="fab fa-linkedin"></i>
+                                 </a>
+                                  
+                                 <a
+                                    href="https://scholar.google.com/citations?user=M3ghXKkAAAAJ&amp;hl=en"
+                                    target="_blank"
+                                    class="icon-link"
+                                    style="color: #000"
+                                 >
+                                    <i class="ai ai-google-scholar"></i>
+                                 </a>
+                                  
+                                 <a
+                                    href="https://sites.google.com/view/faiassatter/about"
+                                    target="_blank"
+                                    class="icon-link"
+                                    style="color: #420303"
+                                 >
+                                    <i class="fas fa-globe"></i>
+                                 </a>
+                                  
+                                 <a
+                                    href="mailto:faias.satter1@louisiana.edu"
+                                    class="icon-link"
+                                    style="color: #d44638"
+                                 >
+                                    <i class="fas fa-envelope"></i>
+                                 </a>
+                                 
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div class="col-lg-6 mb-4">
+                     <div
+                        class="card p-3 shadow-sm"
+                        style="border-left: 5px solid #420303"
+                     >
+                        <div class="d-flex align-items-start">
+                           <!-- Profile Photo -->
+                           <img
+                              src="static/uploads/students/IMG_6795_Md._Hasibul_Hasan.jpg"
+                              alt="Md. Hasibul Hasan"
+                              class="rounded-circle me-3"
+                              style="
+                                 width: 100px;
+                                 height: 100px;
+                                 object-fit: cover;
+                                 border: 3px solid #420303;
+                              "
+                           />
+
+                           <div class="flex-grow-1">
+                              <h5 class="mb-1 text-primary-custom">
+                                 Md. Hasibul Hasan
+                              </h5>
+
+                              <!-- Role Tag -->
+                              
+                              <span
+                                 class="badge"
+                                 style="background-color: #022e02"
+                                 >Masters Student</span
+                              >
+                              
+
+                              <p class="mt-2 mb-1">
+                                 <strong>Research:</strong> DNA sequencing using language model
+                              </p>
+                              <p class="text-muted mb-1">
+                                 <i class="fas fa-university me-1"></i> School of Computing and Informatics, ULL
+                              </p>
+                              <p class="text-muted mb-2">
+                                 <i class="fas fa-calendar me-1"></i>
+                                  Fall 2025 – Present
+                                 
+                              </p>
+
+                              <!-- Social Icons -->
+                              <div class="d-flex gap-3">
+                                 
+                                 <a
+                                    href="https://www.linkedin.com/in/hasan-shanto/"
+                                    target="_blank"
+                                    class="icon-link"
+                                    style="color: #0a66c2"
+                                 >
+                                    <i class="fab fa-linkedin"></i>
+                                 </a>
+                                   
+                                 <a
+                                    href="https://sites.google.com/view/hasan-shanto/home?authuser=0"
+                                    target="_blank"
+                                    class="icon-link"
+                                    style="color: #420303"
+                                 >
+                                    <i class="fas fa-globe"></i>
+                                 </a>
+                                  
+                                 <a
+                                    href="mailto:md-hasibul.hasan1@louisiana.edu"
+                                    class="icon-link"
+                                    style="color: #d44638"
+                                 >
+                                    <i class="fas fa-envelope"></i>
+                                 </a>
+                                 
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+               </div>
+            </div>
+
+            <!-- Alumni Section -->
+            <div class="mb-5">
+   <h3 class="text-primary-custom mb-4">Alumni</h3>
+   <div class="row">
+      
+      <div class="col-lg-4 col-md-6 mb-4">
+         <div
+            class="card p-3 shadow-sm"
+            style="background-color: #f8f4f4; border-radius: 8px"
+         >
+            <!-- Name & Degree Badge -->
+            <div
+               class="d-flex justify-content-between align-items-center mb-2"
+            >
+               <h5 class="text-primary-custom mb-0">
+                  Shamir Khandaker
+               </h5>
+               
+               <span class="badge" style="background-color: #2e1802"
+                  >PhD</span
+               >
+               
+            </div>
+
+            <!-- Thesis -->
+            
+            <p class="mb-2">
+               <strong>Thesis:</strong> Curating Training Data in ML/DL Models
+            </p>
+            
+
+            <!-- Current Position -->
+            
+            <p class="mb-2">
+               <strong>Current Position:</strong> Assistant Professor, Oklahoma City University
+            </p>
+            
+
+            <!-- Timeline -->
+            
+            <p class="mb-2">
+               <small>
+                  <i class="fas fa-calendar me-1"></i>Fall 2018 – Fall 2023
+               </small>
+            </p>
+            
+
+            <!-- Icon Links -->
+            
+         </div>
+      </div>
+      
+      <div class="col-lg-4 col-md-6 mb-4">
+         <div
+            class="card p-3 shadow-sm"
+            style="background-color: #f8f4f4; border-radius: 8px"
+         >
+            <!-- Name & Degree Badge -->
+            <div
+               class="d-flex justify-content-between align-items-center mb-2"
+            >
+               <h5 class="text-primary-custom mb-0">
+                  Sahan Ahmad
+               </h5>
+               
+               <span class="badge" style="background-color: #2e1802"
+                  >PhD</span
+               >
+               
+            </div>
+
+            <!-- Thesis -->
+            
+            <p class="mb-2">
+               <strong>Thesis:</strong> Optimization and Adaptive Kernel Design for Convolutional Neural Network
+            </p>
+            
+
+            <!-- Current Position -->
+            
+            <p class="mb-2">
+               <strong>Current Position:</strong> Assistant Professor at Texas A&amp;M University, San Antonio
+            </p>
+            
+
+            <!-- Timeline -->
+            
+            <p class="mb-2">
+               <small>
+                  <i class="fas fa-calendar me-1"></i>Fall 2020 – Spring 2023
+               </small>
+            </p>
+            
+
+            <!-- Icon Links -->
+            
+         </div>
+      </div>
+      
+      <div class="col-lg-4 col-md-6 mb-4">
+         <div
+            class="card p-3 shadow-sm"
+            style="background-color: #f8f4f4; border-radius: 8px"
+         >
+            <!-- Name & Degree Badge -->
+            <div
+               class="d-flex justify-content-between align-items-center mb-2"
+            >
+               <h5 class="text-primary-custom mb-0">
+                  Khalid Alattas
+               </h5>
+               
+               <span class="badge" style="background-color: #2e1802"
+                  >PhD</span
+               >
+               
+            </div>
+
+            <!-- Thesis -->
+            
+            <p class="mb-2">
+               <strong>Thesis:</strong> Smart Unsupervised Ranking Based on Robust Clustering; Co-Supervisor: Prof. Magdy Bayoumi
+            </p>
+            
+
+            <!-- Current Position -->
+            
+            <p class="mb-2">
+               <strong>Current Position:</strong> Associate Professor of Artificial Intelligence at University of Jeddah
+            </p>
+            
+
+            <!-- Timeline -->
+            
+            <p class="mb-2">
+               <small>
+                  <i class="fas fa-calendar me-1"></i>Fall 2016 – Fall 2019
+               </small>
+            </p>
+            
+
+            <!-- Icon Links -->
+            
+         </div>
+      </div>
+      
+      <div class="col-lg-4 col-md-6 mb-4">
+         <div
+            class="card p-3 shadow-sm"
+            style="background-color: #f8f4f4; border-radius: 8px"
+         >
+            <!-- Name & Degree Badge -->
+            <div
+               class="d-flex justify-content-between align-items-center mb-2"
+            >
+               <h5 class="text-primary-custom mb-0">
+                  Jeevithan Alagurajah
+               </h5>
+               
+               <span class="badge" style="background-color: #022e02"
+                  >Masters</span
+               >
+               
+            </div>
+
+            <!-- Thesis -->
+            
+
+            <!-- Current Position -->
+            
+
+            <!-- Timeline -->
+            
+            <p class="mb-2">
+               <small>
+                  <i class="fas fa-calendar me-1"></i>2017 – 2018
+               </small>
+            </p>
+            
+
+            <!-- Icon Links -->
+            
+         </div>
+      </div>
+      
+      <div class="col-lg-4 col-md-6 mb-4">
+         <div
+            class="card p-3 shadow-sm"
+            style="background-color: #f8f4f4; border-radius: 8px"
+         >
+            <!-- Name & Degree Badge -->
+            <div
+               class="d-flex justify-content-between align-items-center mb-2"
+            >
+               <h5 class="text-primary-custom mb-0">
+                  Jie Mei
+               </h5>
+               
+               <span class="badge" style="background-color: #022e02"
+                  >Masters</span
+               >
+               
+            </div>
+
+            <!-- Thesis -->
+            
+            <p class="mb-2">
+               <strong>Thesis:</strong> OCR Text Corection; Co-Supervisor: Evangelos E. Milios
+            </p>
+            
+
+            <!-- Current Position -->
+            
+            <p class="mb-2">
+               <strong>Current Position:</strong> Research Scientist, Microsoft
+            </p>
+            
+
+            <!-- Timeline -->
+            
+            <p class="mb-2">
+               <small>
+                  <i class="fas fa-calendar me-1"></i>2015 – 2017
+               </small>
+            </p>
+            
+
+            <!-- Icon Links -->
+            
+         </div>
+      </div>
+      
+      <div class="col-lg-4 col-md-6 mb-4">
+         <div
+            class="card p-3 shadow-sm"
+            style="background-color: #f8f4f4; border-radius: 8px"
+         >
+            <!-- Name & Degree Badge -->
+            <div
+               class="d-flex justify-content-between align-items-center mb-2"
+            >
+               <h5 class="text-primary-custom mb-0">
+                  Md Rashadul Hasan Rakib
+               </h5>
+               
+               <span class="badge" style="background-color: #022e02"
+                  >Masters</span
+               >
+               
+            </div>
+
+            <!-- Thesis -->
+            
+            <p class="mb-2">
+               <strong>Thesis:</strong> TRWP: Text Relatedness Using Word and Phrase Relatedness; Co-Supervisor: Evangelos E. Milios
+            </p>
+            
+
+            <!-- Current Position -->
+            
+
+            <!-- Timeline -->
+            
+            <p class="mb-2">
+               <small>
+                  <i class="fas fa-calendar me-1"></i>2012 – 2014
+               </small>
+            </p>
+            
+
+            <!-- Icon Links -->
+            
+         </div>
+      </div>
+      
+   </div>
+</div>
+         </div>
+      </section>
+      <!-- Projects Section -->
+      <section id="projects" class="section">
+         <div class="container">
+            <h2 class="section-title">Research Projects</h2>
+
+            <!-- Ongoing Projects -->
+            
+            <div class="row">
+               
+               <div class="col-md-6 mb-4">
+                  <div
+                     class="card shadow-sm project-card"
+                     style="
+                        background-color: #f8f4f4;
+                        border-radius: 8px;
+                        overflow: hidden;
+                     "
+                  >
+                     <!-- Image -->
+                     <a
+                        href="projects/3"
+                     >
+                        <img
+                           src="static/uploads/projects/image_1.png"
+                           alt=" Protein Language Model"
+                           class="img-fluid"
+                           style="width: 100%; height: 220px; object-fit: cover"
+                        />
+                     </a>
+
+                     <div class="card-body">
+                        <!-- Title & Status -->
+                        <div
+                           class="d-flex justify-content-between align-items-center mb-2"
+                        >
+                           <h5 class="text-primary-custom mb-0">
+                               Protein Language Model
+                           </h5>
+                           <span class="badge bg-success"
+                              >Ongoing</span
+                           >
+                        </div>
+
+                        <!-- Topic -->
+                        <p class="mb-2">
+                           <strong>Topic:</strong> NLP, Bioinformatics, Computational Biology
+                        </p>
+
+                        <!-- Overview (2 lines max) -->
+                        <p
+                           class="text-muted mb-2"
+                           style="
+                              display: -webkit-box;
+                              -webkit-line-clamp: 2;
+                              -webkit-box-orient: vertical;
+                              overflow: hidden;
+                           "
+                        >
+                           The Protein Language Model project focuses on learning the underlying “language” of proteins by treating amino acid sequences as structured text. Using large-scale pretraining on the UniRef90 dataset, the model applies BPE tokenization and a Transformer-based architecture (similar to BERT) to capture contextual and evolutionary dependencies among residues. By learning rich sequence representations, the pretrained model serves as a foundation for diverse downstream biological tasks.
+These downstream tasks span multiple dimensions of protein understanding:
+Protein Structure Prediction – including secondary structure classification, disorder region detection, remote homology recognition, and fold class prediction.
+Post-Translational Modifications – addressing signal peptide identification, major PTM recognition, and neuropeptide cleavage site prediction.
+Biophysical Properties – modeling protein fluorescence and stability to support rational protein design.
+Inverse Protein Folding – generating amino acid sequences that align with desired 3D structures, enabling structure-conditioned protein design.
+By unifying these tasks under a shared pretrained framework, the Protein Language Model aims to establish a comprehensive foundation for protein sequence understanding, function prediction, and design — bridging the gap between bioinformatics and artificial intelligence.
+                        </p>
+
+                        <!-- See More Button -->
+                        <a
+                           href="projects/3"
+                           class="btn btn-sm see-more-btn"
+                           >See More</a
+                        >
+                        <!-- Timeline -->
+                        <small class="text-muted d-block mt-2"
+                           ><i class="fas fa-calendar"></i> Fall 2025</small
+                        >
+                     </div>
+                  </div>
+               </div>
+
+               
+               <div class="col-md-6 mb-4">
+                  <div
+                     class="card shadow-sm project-card"
+                     style="
+                        background-color: #f8f4f4;
+                        border-radius: 8px;
+                        overflow: hidden;
+                     "
+                  >
+                     <!-- Image -->
+                     <a
+                        href="projects/4"
+                     >
+                        <img
+                           src="static/uploads/projects/VL_Methodology_1-1.png"
+                           alt="Vision Language"
+                           class="img-fluid"
+                           style="width: 100%; height: 220px; object-fit: cover"
+                        />
+                     </a>
+
+                     <div class="card-body">
+                        <!-- Title & Status -->
+                        <div
+                           class="d-flex justify-content-between align-items-center mb-2"
+                        >
+                           <h5 class="text-primary-custom mb-0">
+                              Vision Language
+                           </h5>
+                           <span class="badge bg-success"
+                              >Ongoing</span
+                           >
+                        </div>
+
+                        <!-- Topic -->
+                        <p class="mb-2">
+                           <strong>Topic:</strong> NLP, Computer Vision
+                        </p>
+
+                        <!-- Overview (2 lines max) -->
+                        <p
+                           class="text-muted mb-2"
+                           style="
+                              display: -webkit-box;
+                              -webkit-line-clamp: 2;
+                              -webkit-box-orient: vertical;
+                              overflow: hidden;
+                           "
+                        >
+                           Recent advancements in computer vision and Natural Language Processing (NLP) have transformed how machines interpret visual and textual information. While traditional image processing techniques rely on pixel-based analysis and feature extraction, and NLP leverages self-attention mechanisms for contextual understanding, the potential of viewing images as a language remains largely unexplored. In this work as a proof-of-concept, we introduce a novel &#34;Vision Language&#34; framework, transforming image pixels into sequences of alphanumeric characters, effectively treating images as &#34;text&#34;. This unique representation enables the direct application of NLP techniques to computer vision tasks, such as classification and segmentation, by utilizing text-based models for image analysis. We demonstrate this approach by adapting text classification methods for image classification on benchmark datasets. Furthermore, we construct a domain-specific medical language from the MedMNIST dataset, spanning 11 medical imaging sub-datasets, illustrating how a unified language can effectively generalize across distinct datasets. We create a broad, generalized language from ImageNet, leveraging approximately 1.3 million images to show that a language derived from extensive image data can simplify and unify image processing across tasks and datasets. Our findings reveal a promising cross-disciplinary approach that bridges computer vision and NLP.
+                        </p>
+
+                        <!-- See More Button -->
+                        <a
+                           href="projects/4"
+                           class="btn btn-sm see-more-btn"
+                           >See More</a
+                        >
+                        <!-- Timeline -->
+                        <small class="text-muted d-block mt-2"
+                           ><i class="fas fa-calendar"></i> Fall 2024</small
+                        >
+                     </div>
+                  </div>
+               </div>
+
+               
+               <div class="col-md-6 mb-4">
+                  <div
+                     class="card shadow-sm project-card"
+                     style="
+                        background-color: #f8f4f4;
+                        border-radius: 8px;
+                        overflow: hidden;
+                     "
+                  >
+                     <!-- Image -->
+                     <a
+                        href="projects/5"
+                     >
+                        <img
+                           src="static/uploads/projects/img1-1-1.png"
+                           alt=" Efficient Deep Learning with Reduced Data Utilization"
+                           class="img-fluid"
+                           style="width: 100%; height: 220px; object-fit: cover"
+                        />
+                     </a>
+
+                     <div class="card-body">
+                        <!-- Title & Status -->
+                        <div
+                           class="d-flex justify-content-between align-items-center mb-2"
+                        >
+                           <h5 class="text-primary-custom mb-0">
+                               Efficient Deep Learning with Reduced Data Utilization
+                           </h5>
+                           <span class="badge bg-success"
+                              >Ongoing</span
+                           >
+                        </div>
+
+                        <!-- Topic -->
+                        <p class="mb-2">
+                           <strong>Topic:</strong> Deep Learning
+                        </p>
+
+                        <!-- Overview (2 lines max) -->
+                        <p
+                           class="text-muted mb-2"
+                           style="
+                              display: -webkit-box;
+                              -webkit-line-clamp: 2;
+                              -webkit-box-orient: vertical;
+                              overflow: hidden;
+                           "
+                        >
+                           Deep learning delivers remarkable performance but demands vast computational resources and massive datasets, making training costly and inefficient. To address this, we propose a lightweight, architecture-agnostic method that accelerates training by dynamically removing data batches that contribute less to learning. It tracks the stability of internal activations across epochs and prunes batches whose activation variance shows minimal change, signaling diminishing learning utility. Unlike prior data reduction or distillation methods, it adds no auxiliary networks or extra computation, achieving significant reductions in data usage and training time while maintaining or even improving model accuracy.
+                        </p>
+
+                        <!-- See More Button -->
+                        <a
+                           href="projects/5"
+                           class="btn btn-sm see-more-btn"
+                           >See More</a
+                        >
+                        <!-- Timeline -->
+                        <small class="text-muted d-block mt-2"
+                           ><i class="fas fa-calendar"></i> Spring 2025</small
+                        >
+                     </div>
+                  </div>
+               </div>
+
+               
+            </div>
+
+            <!-- Completed Projects -->
+            <!-- <h3 class="text-primary-custom mb-4 mt-5">Completed Projects</h3> -->
+            <!-- <div class="row">
+               
+            </div> -->
+         </div>
+      </section>
+      <!-- Publications Section -->
+      <section id="publications" class="section">
+         <div class="container">
+            <h2 class="section-title">Publications</h2>
+
+            <div class="text-center mb-4">
+               <a
+                  href="https://scholar.google.com/citations?user=GZWObWoAAAAJ&amp;hl=en"
+                  target="_blank"
+                  class="btn btn-primary btn-lg"
+               >
+                  <i class="fas fa-graduation-cap me-2"></i>View Full Google
+                  Scholar Profile
+               </a>
+            </div>
+
+            
+            <p class="text-center text-muted">
+               No featured publications yet. Check our Google Scholar profile
+               for all publications.
+            </p>
+            
+         </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+         <div class="container text-center">
+            <h5><i class="fas fa-brain me-2"></i>DADL Lab</h5>
+            <p>Data Analysis and Deep Learning Laboratory</p>
+            <p>© 2024 DADL Lab. All rights reserved.</p>
+         </div>
+      </footer>
+
+      <!-- Admin Button -->
+      <div class="admin-float">
+         <a href="admin-login" class="admin-btn" title="Admin">
+            <i class="fas fa-cog"></i>
+         </a>
+      </div>
+
+      <!-- Bootstrap JS -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+      <script>
+         // Scroll to top on page load/reload
+         window.addEventListener("load", function () {
+            window.scrollTo(0, 0);
+         });
+
+         // Smooth scrolling for navigation links
+         document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener("click", function (e) {
+               e.preventDefault();
+               const target = document.querySelector(this.getAttribute("href"));
+               if (target) {
+                  target.scrollIntoView({
+                     behavior: "smooth",
+                     block: "start",
+                  });
+               }
+            });
+         });
+
+         // Update active nav item based on scroll position
+         window.addEventListener("scroll", function () {
+            let current = "";
+            const sections = document.querySelectorAll("section[id]");
+
+            sections.forEach((section) => {
+               const sectionTop = section.offsetTop - 100;
+               if (scrollY >= sectionTop) {
+                  current = section.getAttribute("id");
+               }
+            });
+
+            document
+               .querySelectorAll(".navbar-nav .nav-link")
+               .forEach((link) => {
+                  link.classList.remove("active");
+                  if (link.getAttribute("href") === "#" + current) {
+                     link.classList.add("active");
+                  }
+               });
+         });
+      </script>
+   </body>
+</html>
