@@ -33,6 +33,10 @@
             padding-top: 60px;
          }
 
+         .section {
+            padding: 60px 0 20px 0 !important;
+         }
+
          .navbar {
             background-color: var(--dadl-primary) !important;
             padding: 0.5rem 0;
@@ -233,9 +237,6 @@
                      <a class="nav-link" href="#about">Home</a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link" href="#professor">Professor</a>
-                  </li>
-                  <li class="nav-item">
                      <a class="nav-link" href="#students">Students</a>
                   </li>
                   <li class="nav-item">
@@ -255,11 +256,6 @@
             <h1 class="hero-title">DADL Lab</h1>
             <p class="hero-subtitle">
                Data Analysis and Deep Learning Laboratory
-            </p>
-            <p class="fs-6">
-               Our lab is focused on developing innovative machine learning
-               algorithms and data analysis techniques to solve real-world
-               problems across diverse domains.
             </p>
          </div>
       </section>
@@ -324,121 +320,105 @@
       </section>
 
       <!-- Professor Section -->
-      <section id="professor" class="section">
-         <div class="container">
-            <h2 class="section-title">Principal Investigator</h2>
-            <div class="card p-4">
-               <div class="row align-items-center">
-                  <div class="col-lg-3 text-center">
-                     {% if professor.photo %}
-                     <img
-                        src="{{ url_for('static', filename='uploads/professor/' + professor.photo) }}"
-                        class="rounded-circle mx-auto d-flex align-items-center justify-content-center"
-                        style="width: 200px; height: 200px; object-fit: cover"
-                        alt="{{ professor.name }}"
-                     />
-                     {% else %}
-                     <div
-                        class="bg-light rounded-circle mx-auto d-flex align-items-center justify-content-center"
-                        style="width: 200px; height: 200px"
-                     >
-                        <i class="fas fa-user fa-5x text-secondary"></i>
-                     </div>
-                     {% endif %}
-                  </div>
-                  <div class="col-lg-9">
-                     <h3 class="text-primary-custom mb-2">
-                        {{ professor.name or 'Dr. John Smith' }}
-                     </h3>
-                     <h5 class="text-muted mb-3">
-                        {{ professor.title or 'Professor and Lab Director' }}
-                     </h5>
-                     <p class="mb-3">
-                        {{ professor.bio or 'Principal Investigator with
-                        expertise in machine learning and artificial
-                        intelligence.' }}
+   <section id="professor" class="section">
+   <div class="container">
+      <div class="card p-4">
+         <div class="row">
+            <!-- Left column: Photo and basic info -->
+            <div class="col-lg-2 col-md-3 text-center mb-3 mb-md-0">
+               {% if professor.photo %}
+               <img
+                  src="{{ url_for('static', filename='uploads/professor/' + professor.photo) }}"
+                  class="rounded-circle mx-auto"
+                  style="width: 140px; height: 140px; object-fit: cover; border: 3px solid #420303;"
+                  alt="{{ professor.name }}"
+               />
+               {% else %}
+               <div
+                  class="bg-light rounded-circle mx-auto d-flex align-items-center justify-content-center"
+                  style="width: 150px; height: 150px"
+               >
+                  <i class="fas fa-user fa-4x text-secondary"></i>
+               </div>
+               {% endif %}
+               
+               <h5 class="text-primary-custom mt-3 mb-2">
+                  {{ professor.name or 'Aminul Islam' }}
+               </h5>
+               
+               <div class="text-muted">
+                  {% if professor.title %}
+                     {% for title in professor.title.split(',') %}
+                        <div>{{ title.strip() }}</div>
+                     {% endfor %}
+                  {% else %}
+                     <div>Associate Professor</div>
+                  {% endif %}
+               </div>
+
+               <!-- Social Links -->
+               <div class="d-flex justify-content-center gap-2 mt-3">
+                  {% if professor.linkedin %}
+                  <a href="{{ professor.linkedin }}" target="_blank" class="icon-link" style="color: #0a66c2">
+                     <i class="fab fa-linkedin"></i>
+                  </a>
+                  {% endif %}
+                  {% if professor.google_scholar %}
+                  <a href="{{ professor.google_scholar }}" target="_blank" class="icon-link" style="color: #000">
+                     <i class="ai ai-google-scholar"></i>
+                  </a>
+                  {% endif %}
+                  {% if professor.website %}
+                  <a href="{{ professor.website }}" target="_blank" class="icon-link" style="color: #420303">
+                     <i class="fas fa-globe"></i>
+                  </a>
+                  {% endif %}
+                  {% if professor.email %}
+                  <a href="mailto:{{ professor.email }}" class="icon-link" style="color: #d44638">
+                     <i class="fas fa-envelope"></i>
+                  </a>
+                  {% endif %}
+               </div>
+            </div>
+
+            <!-- Right column: Details -->
+            <div class="col-lg-10 col-md-9">
+               {% if professor.bio %}
+               <div class="mb-3">
+                  <h5 class="mb-2">About Me</h5>
+                  <p>{{ professor.bio }}</p>
+               </div>
+               {% endif %}
+
+               <div>
+                  <h5 class="mb-2">Education</h5>
+                  <ul class="list-unstyled">
+                     {% for entry in professor.education.split('\n') %}
+                     <li class="mb-1">{{ entry }}</li>
+                     {% endfor %}
+                  </ul>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-md-4">
+                     <h6 class="mb-1"><i class="fas fa-envelope me-1"></i> Email</h6>
+                     <p class="text-muted mb-0">
+                        {{ professor.email or 'prof@university.edu' }}
                      </p>
-
-                     <h4>Education</h4>
-                     <ul class="list-unstyled">
-                        {% for entry in professor.education.split('\n') %}
-                        <li class="mb-2">{{ entry }}</li>
-                        {% endfor %}
-                     </ul>
-                     <div class="mb-3">
-                        <h4>Experience</h4>
-                        <p>
-                           {{ professor.experience or 'Professor at University,
-                           Associate Professor, Research Scientist' }}
-                        </p>
-                     </div>
-
-                     <!-- Contact Information -->
-                     <div class="contact-info mb-3">
-                        <div class="row">
-                           <div class="col-md-4">
-                              <h6>Email</h6>
-                              <p class="mb-1">
-                                 {{ professor.email or 'prof@university.edu' }}
-                              </p>
-                           </div>
-                           <div class="col-md-4">
-                              <h6>Office</h6>
-                              <p class="mb-1">
-                                 {{ professor.office or 'Room 301, CS Building'
-                                 }}
-                              </p>
-                           </div>
-                           <div class="col-md-4">
-                              <h6>Office Hours</h6>
-                              <p class="mb-1">Mon/Wed 2-4 PM</p>
-                           </div>
-                        </div>
-                     </div>
-
-                     <div class="d-flex gap-3">
-                        {% if professor.linkedin %}
-                        <a
-                           href="{{ professor.linkedin }}"
-                           target="_blank"
-                           class="icon-link"
-                           style="color: #0a66c2"
-                        >
-                           <i class="fab fa-linkedin"></i>
-                        </a>
-                        {% endif %} {% if professor.google_scholar %}
-                        <a
-                           href="{{ professor.google_scholar }}"
-                           target="_blank"
-                           class="icon-link"
-                           style="color: #000"
-                        >
-                           <i class="ai ai-google-scholar"></i>
-                        </a>
-                        {% endif %} {% if professor.website %}
-                        <a
-                           href="{{ professor.website }}"
-                           target="_blank"
-                           class="icon-link"
-                           style="color: #420303"
-                        >
-                           <i class="fas fa-globe"></i>
-                        </a>
-                        {% endif %} {% if professor.email %}
-                        <a
-                           href="mailto:{{ professor.email }}"
-                           class="icon-link"
-                           style="color: #d44638"
-                        >
-                           <i class="fas fa-envelope"></i>
-                        </a>
-                        {% endif %}
-                     </div>
                   </div>
+                  <div class="col-md-4">
+                     <h6 class="mb-1"><i class="fas fa-building me-1"></i> Office</h6>
+                     <p class="text-muted mb-0">
+                        {{ professor.office or 'Room 301, CS Building' }}
+                     </p>
+                  </div>
+                  
                </div>
             </div>
          </div>
-      </section>
+      </div>
+   </div>
+</section>
 
       <!-- Students Section -->
       <section id="students" class="section">
@@ -554,87 +534,94 @@
 
             <!-- Alumni Section -->
             <div class="mb-5">
-               <h3 class="text-primary-custom mb-4">Alumni</h3>
-               <div class="row">
-                  {% for student in former_phd + former_masters %}
-                  <div class="col-lg-6 mb-4">
-                     <div
-                        class="card p-3 shadow-sm"
-                        style="background-color: #f8f4f4; border-radius: 8px"
-                     >
-                        <!-- Name & Degree Badge -->
-                        <div
-                           class="d-flex justify-content-between align-items-center mb-2"
-                        >
-                           <h5 class="text-primary-custom mb-0">
-                              {{ student.name }}
-                           </h5>
-                           {% if student in former_phd %}
-                           <span class="badge" style="background-color: #2e1802"
-                              >PhD Student</span
-                           >
-                           {% else %}
-                           <span class="badge" style="background-color: #022e02"
-                              >Masters Student</span
-                           >
-                           {% endif %}
-                        </div>
-
-                        <!-- Thesis -->
-                        <p>
-                           <strong>Thesis:</strong> {{ student.thesis_title or
-                           'Deep Learning Research' }}
-                        </p>
-
-                        <!-- Current Position -->
-                        <p>
-                           <strong>Current Position:</strong> {{
-                           student.current_work or 'Research Scientist' }}
-                        </p>
-
-                        <!-- Timeline -->
-                        <p>
-                           <small>
-                              <i class="fas fa-calendar me-1"></i>{{
-                              student.start_date }} – {{ student.end_date }}
-                           </small>
-                        </p>
-
-                        <!-- Icon Links -->
-                        <div class="d-flex gap-3">
-                           {% if student.linkedin %}
-                           <a
-                              href="{{ student.linkedin }}"
-                              target="_blank"
-                              class="text-decoration-none icon-link"
-                              style="color: #0a66c2"
-                           >
-                              <i class="fab fa-linkedin"></i>
-                           </a>
-                           {% endif %} {% if student.google_scholar %}
-                           <a
-                              href="{{ student.google_scholar }}"
-                              target="_blank"
-                              class="text-decoration-none icon-link"
-                              style="color: #000"
-                           >
-                              <i class="ai ai-google-scholar"></i>
-                           </a>
-                           {% endif %} {% if student.email %}
-                           <a
-                              href="mailto:{{ student.email }}"
-                              class="text-decoration-none icon-link"
-                              style="color: #d44638"
-                           >
-                              <i class="fas fa-envelope"></i>
-                           </a>
-                           {% endif %}
-                        </div>
-                     </div>
-                  </div>
-                  {% endfor %}
-               </div>
+   <h3 class="text-primary-custom mb-4">Alumni</h3>
+   <div class="row">
+      {% for student in former_phd + former_masters %}
+      <div class="col-lg-4 col-md-6 mb-4">
+         <div
+            class="card p-3 shadow-sm"
+            style="background-color: #f8f4f4; border-radius: 8px"
+         >
+            <!-- Name & Degree Badge -->
+            <div
+               class="d-flex justify-content-between align-items-center mb-2"
+            >
+               <h5 class="text-primary-custom mb-0">
+                  {{ student.name }}
+               </h5>
+               {% if student in former_phd %}
+               <span class="badge" style="background-color: #2e1802"
+                  >PhD</span
+               >
+               {% else %}
+               <span class="badge" style="background-color: #022e02"
+                  >Masters</span
+               >
+               {% endif %}
             </div>
+
+            <!-- Thesis -->
+            {% if student.thesis_title %}
+            <p class="mb-2">
+               <strong>Thesis:</strong> {{ student.thesis_title }}
+            </p>
+            {% endif %}
+
+            <!-- Current Position -->
+            {% if student.current_work %}
+            <p class="mb-2">
+               <strong>Current Position:</strong> {{ student.current_work }}
+            </p>
+            {% endif %}
+
+            <!-- Timeline -->
+            {% if student.start_date and student.end_date %}
+            <p class="mb-2">
+               <small>
+                  <i class="fas fa-calendar me-1"></i>{{ student.start_date }} – {{ student.end_date }}
+               </small>
+            </p>
+            {% endif %}
+
+            <!-- Icon Links -->
+            {% if student.linkedin or student.google_scholar or student.email %}
+            <div class="d-flex gap-3 mt-2">
+               {% if student.linkedin %}
+               
+                  href="{{ student.linkedin }}"
+                  target="_blank"
+                  class="text-decoration-none icon-link"
+                  style="color: #0a66c2"
+               >
+                  <i class="fab fa-linkedin"></i>
+               </a>
+               {% endif %}
+               {% if student.google_scholar %}
+               
+                  href="{{ student.google_scholar }}"
+                  target="_blank"
+                  class="text-decoration-none icon-link"
+                  style="color: #000"
+               >
+                  <i class="ai ai-google-scholar"></i>
+               </a>
+               {% endif %}
+               {% if student.email %}
+               
+                  href="mailto:{{ student.email }}"
+                  class="text-decoration-none icon-link"
+                  style="color: #d44638"
+               >
+                  <i class="fas fa-envelope"></i>
+               </a>
+               {% endif %}
+            </div>
+            {% endif %}
+         </div>
+      </div>
+      {% endfor %}
+   </div>
+</div>
          </div>
       </section>
       <!-- Projects Section -->
@@ -643,7 +630,7 @@
             <h2 class="section-title">Research Projects</h2>
 
             <!-- Ongoing Projects -->
-            <h3 class="text-primary-custom mb-4">Ongoing Projects</h3>
+            
             <div class="row">
                {% for project in ongoing_projects %}
                <div class="col-md-6 mb-4">
@@ -660,7 +647,7 @@
                         href="{{ url_for('project_detail', project_id=project.id) }}"
                      >
                         <img
-                           src="{% if project.image1 %}{{ url_for('static', filename='uploads/projects/' + project.image1) }}{% else %}{{ url_for('static', filename='default-project.png') }}{% endif %}"
+                           src="{% if project.image1 %}{{ url_for('static', filename='uploads/projects/' + project.image1) }}{% else %}{{ url_for('static', filename='uploads/projects/dummy.png') }}{% endif %}"
                            alt="{{ project.title }}"
                            class="img-fluid"
                            style="width: 100%; height: 220px; object-fit: cover"
@@ -682,8 +669,7 @@
 
                         <!-- Topic -->
                         <p class="mb-2">
-                           <strong>Topic:</strong> {{ project.topic or 'AI
-                           Research' }}
+                           <strong>Topic:</strong> {{ project.topic or 'Deep Learning' }}
                         </p>
 
                         <!-- Overview (2 lines max) -->
@@ -718,8 +704,8 @@
             </div>
 
             <!-- Completed Projects -->
-            <h3 class="text-primary-custom mb-4 mt-5">Completed Projects</h3>
-            <div class="row">
+            <!-- <h3 class="text-primary-custom mb-4 mt-5">Completed Projects</h3> -->
+            <!-- <div class="row">
                {% for project in completed_projects %}
                <div class="col-md-6 mb-4">
                   <a
@@ -772,7 +758,7 @@
                   </a>
                </div>
                {% endfor %}
-            </div>
+            </div> -->
          </div>
       </section>
       <!-- Publications Section -->
