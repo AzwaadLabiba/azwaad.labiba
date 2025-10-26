@@ -1,17 +1,18 @@
 from flask_frozen import Freezer
 from app import app
 
+# Configure freezer
 app.config['FREEZER_DESTINATION'] = 'build'
 app.config['FREEZER_RELATIVE_URLS'] = True
-app.config['FREEZER_REMOVE_EXTRA_FILES'] = True
-
-# Add this line:
-app.config['FREEZER_DESTINATION_IGNORE'] = ['.git*', 'CNAME', '.gitignore']
 
 freezer = Freezer(app)
 
-# Add URL generators to append .html
-@freezer.register_generator
-def page_urls():
-    for page in ['education', 'experience', 'publications', 'achievements']:
-        yield 'page', {'page': page}
+# No need to register generators for static routes - they're auto-discovered!
+# Only register if you have dynamic routes like /blog/<slug>
+
+if __name__ == '__main__':
+    freezer.freeze()
+    print("\n" + "="*60)
+    print("Site frozen successfully!")
+    print("Output directory: build/")
+    print("="*60)
