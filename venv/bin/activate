@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV=/home/labiba/sw-workstation/dadl_lab_website/venv
+VIRTUAL_ENV=/home/labiba/sw-workstation/azwaad.site/venv
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

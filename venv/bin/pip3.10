@@ -1,4 +1,4 @@
-#!/home/labiba/sw-workstation/dadl_lab_website/venv/bin/python3
+#!/home/labiba/sw-workstation/azwaad.site/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
